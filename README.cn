@@ -1,0 +1,122 @@
+声音复刻
+基于 Next.js、FastAPI 和 CosyVoice2 的多语言声音克隆交付版。
+本目录是从原始项目复制出的独立副本，后续整理、脚本、文档和交付相关修改均只在本目录内进行，原项目保持不变。
+项目简介
+用户上传 5 到 30 秒参考音频后，系统可提取说话人特征，创建音色，并生成多语言语音输出。
+当前版本保留并验证了以下核心能力：
+上传参考音频
+创建音色
+多语言语音生成
+历史记录
+音频下载
+音色管理
+播放器试听
+功能介绍
+支持上传 wav、mp3、m4a
+支持 Zero-shot Voice Cloning
+支持跨语言语音生成
+支持音色混合
+支持情绪参数控制
+支持历史记录、重新生成、删除
+支持下载生成的 wav 音频
+技术架构
+前端：Next.js 15 + TypeScript
+后端：FastAPI + Python 3.10/3.11
+模型：CosyVoice2
+数据库：SQLite（默认）
+存储：本地存储
+目录结构
+声音复刻/
+├─ backend/
+├─ frontend/
+├─ scripts/
+├─ docs/
+├─ .gitignore
+├─ .env.example
+├─ README.md
+├─ install.bat
+├─ start.bat
+├─ stop.bat
+└─ launch_voice_clone.bat
+安装步骤
+安装 Python 3.10 或更高版本
+安装 Node.js 20 或更高版本
+双击运行 install.bat
+install.bat 会执行以下操作：
+检查 Python
+检查 Node.js
+创建后端虚拟环境
+安装后端依赖
+安装前端依赖
+创建存储目录
+初始化数据库
+启动步骤
+双击运行：
+start.bat
+脚本会：
+启动后端服务
+启动前端服务
+等待服务可用
+自动打开浏览器首页
+停止服务请运行：
+stop.bat
+常见问题
+1. 页面打不开
+请确认：
+前端端口默认是 3000
+后端端口默认是 8000
+端口未被其他程序占用
+2. m4a 上传失败
+当前版本优先使用系统 ffmpeg 解码；若系统未安装 ffmpeg，则回退到 PyAV 解码。
+如果仍失败，请优先确认音频文件本身可正常播放。
+3. 文本会自动断句吗
+当前版本支持手动控制断句。
+在文本框中直接换行，每一行会作为一个独立片段生成。
+4. 播放器无法自动播放
+在某些浏览器或验收环境中，自动播放会被浏览器策略拦截。
+这不影响音频生成、下载和音频资源本身的有效性。
+Windows 部署
+推荐直接使用以下脚本：
+install.bat
+start.bat
+stop.bat
+自动启动说明请参考：
+[docs/auto-start.md](./docs/auto-start.md)
+GitHub 发布
+发布前请确认以下内容不提交：
+.env
+node_modules
+.venv
+本地日志
+本地数据库
+上传文件
+生成音频
+模型缓存
+项目已提供 .gitignore 用于过滤上述内容。
+后续扩展说明
+后续可继续扩展：
+MinIO / S3 存储
+PostgreSQL 生产配置
+Windows Service 自动运行
+转写后台任务监控
+更多语言和情绪控制能力
+环境变量
+参考根目录 .env.example：
+API_HOST
+API_PORT
+FRONTEND_PORT
+DATABASE_URL
+VOICE_ENGINE
+MODEL_PATH
+WHISPER_MODEL_PATH
+STORAGE_PATH
+NEXT_PUBLIC_API_BASE_URL
+即使没有 .env，项目也会使用默认值启动。
+自动启动方案
+方案 A：NSSM
+示例说明见：
+[docs/auto-start.md](./docs/auto-start.md)
+方案 B：Windows Startup
+同样参考：
+[docs/auto-start.md](./docs/auto-start.md)
+本仓库只保留脚本示例和说明，不写死任何个人路径。
